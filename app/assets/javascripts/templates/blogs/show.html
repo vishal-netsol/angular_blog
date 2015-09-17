@@ -1,0 +1,50 @@
+<section class="col-md-6 col-md-offset-3">
+  <article class="panel panel-info">
+    <header class="panel-heading"><h1>{{blog.title}}</h1></header>
+    <p class="panel-body">
+      {{blog.content}}
+    </p>
+  </article>
+  <section>
+    <div class="col-md-3">
+      <button ng-click="back()" class="btn btn-default">&larr; Back</button>
+    </div>
+    <div class="col-md-9 text-right">
+      <button ng-click="edit()" class="btn btn-info"> Edit </button>
+      <button ng-click="delete()" class="btn btn-danger">Delete</button>
+    </div>
+  </section>
+</section>
+
+<div class="col-md-12">
+  <hr>
+  <h3 class="col-md-6 col-md-offset-3"> Comments </h3>
+</div>
+
+<section class="row col-md-12 col-md-offset-3" ng-if="comments">
+  <ul class="list-unstyled">
+    <li ng-repeat="comment in comments">
+      <h3>{{comment.content}}</h3>
+      <button ng-click="editComment(comment.id)" class="btn btn-info"> Edit </button>
+      <button class="btn btn-danger" ng-click="deleteComment(comment.id, $index)">Delete</button>
+    </li>
+  </ul>
+</section>
+
+<div class="col-md-6 col-md-offset-3">
+
+  <form class="form-horizontal" role="form" class="add_comment">
+    <div class="form-group" ng-class="{'has_warning has_feedback':errors.name}">
+      <div class="col-md-5">
+        <textarea name="title" class="form-control" ng-model="comment.content"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group pull-right">
+      <div class="col-md-4 text-right">
+        <button class="btn btn-primary" ng-click="addComment()"> Comment </button>
+      </div>
+    </div>
+
+  </form>
+</div>
