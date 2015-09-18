@@ -3,8 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   skip_before_filter :verify_authenticity_token, if: proc { |c| c.request.format.json? }
-  #before_filter :authenticate_user_from_token!, if: proc { |c| c.request.format.json? }
-  #before_filter :authenticate_user!
+  before_filter :authenticate_user_from_token!, if: proc { |c| c.request.format.json? }
+
+  respond_to :json
 
 private
 
@@ -13,15 +14,16 @@ def authenticate_user_from_token!
     # in the database with the token given in the params, mitigating
     # timing attacks.
     authenticate_or_request_with_http_token do |token, options|
-      user_email = options['user-email']
+      user_email = request.headers['user-email']
       user = user_email && User.find_by_email(user_email)
-      validate_user_authenticity(user, token)
+      token_body = Devise.token_generator.digest(:user, :body, token)
+      auth = user.authentication_tokens.detect{|t| Devise.secure_compare(t.body, token_body)} rescue nil
+      validate_user_authenticity(user, auth)
     end
   end
 
-  def validate_user_authenticity(user, token)
-    if user && Devise.secure_compare(user.authentication_token,
-                                     token)
+  def validate_user_authenticity(user, auth)
+    if user && auth
       sign_in user, store: false
     elsif devise_controller? && params[:action] == 'create'
       true

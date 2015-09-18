@@ -1,8 +1,14 @@
 controllers = angular.module('controllers')
 controllers.controller("BlogController", ['$scope', '$routeParams',
-'$resource', '$location',
+'$resource', '$location', '$http', '$sessionStorage'
   
-  ($scope, $routeParams, $resource, $location)->
+  ($scope, $routeParams, $resource, $location, $http, $sessionStorage)->
+
+
+    $http.defaults.headers.common['Authorization'] = 'Token token='+$sessionStorage.user_token
+
+    $http.defaults.headers.common['user_email'] = $sessionStorage.user_email
+
     Blog = $resource('/blogs/:blogId', {blogId: "@id", format: 'json'},
       {
         'save': {method: 'PUT'},
@@ -22,9 +28,9 @@ controllers.controller("BlogController", ['$scope', '$routeParams',
       }
     )
 
-    Comment.query((results) -> $scope.comments = results)
-
     if $routeParams.blogId
+      Comment.query((results) -> $scope.comments = results)
+      
       Blog.get({blogId: $routeParams.blogId},
         ((blog) -> $scope.blog = blog)
       )

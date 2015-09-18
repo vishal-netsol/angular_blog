@@ -1,0 +1,32 @@
+<div class="col-md-6 col-md-offset-3">
+
+  <form class="form-horizontal" role="form" class="add_comment">
+    <div class="form-group" ng-class="{'has_warning has_feedback':errors.name}">
+      <label for="title" class="col-md-2 control-label col-md-offset-2"> Email</label>
+      <div class="col-md-5">
+        <input type="text" name="email" class="form-control" ng-model="user.email"/>
+      </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has_warning has_feedback':errors.name}">
+      <label for="title" class="col-md-2 control-label col-md-offset-2"> Password</label>
+      <div class="col-md-5">
+        <input type="password" name="password" class="form-control" ng-model="user.password"/>
+      </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has_warning has_feedback':errors.name}">
+      <label for="title" class="col-md-2 control-label col-md-offset-2"> Re Type Password</label>
+      <div class="col-md-5">
+        <input type="password" name="password" class="form-control" ng-model="user.password_confirmation"/>
+      </div>
+    </div>
+
+    <div class="form-group pull-right">
+      <div class="col-md-4 text-right">
+        <button class="btn btn-primary" ng-click="register()"> Register </button>
+      </div>
+    </div>
+
+  </form>
+</div>
