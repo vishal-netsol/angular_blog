@@ -19,6 +19,9 @@ Rails.application.routes.draw do
       resources :comments
     end
 
+  #get '/\*path' => redirect('/?goto=%{path}')
+
+
   # Example resource route with options:
   #   resources :products do
   #     member do

@@ -5,11 +5,23 @@ blog = angular.module('blog', [
   'controllers',
   'ngCookies',
   'ngStorage',
+  'directives',
+  'ui.bootstrap'
 ])
 
 blog.config(['$routeProvider', '$httpProvider',
 
   ($routeProvider, $httpProvider, $cookieStore) ->
+
+    requireAuthentication = ->
+      { load: ($q, $location) ->
+        if(window.sessionStorage.key('ngStorage-user_token'))
+          true
+        else
+          alert("Please login before continuing!!")
+          $location.path('/')
+      }
+
 
     $routeProvider
       .when('/',
@@ -18,15 +30,19 @@ blog.config(['$routeProvider', '$httpProvider',
       ).when('/blogs/new',
         templateUrl: "blogs/form.html"
         controller: "BlogController"
+        resolve: requireAuthentication()
       ).when('/blogs/:blogId',
         templateUrl: "blogs/show.html"
         controller: "BlogController"
+        resolve: requireAuthentication()
       ).when('/blogs/:blogId/edit',
         templateUrl: "blogs/form.html"
         controller: "BlogController"
+        resolve: requireAuthentication()
       ).when('/blogs/:blogId/comments/:commentId/edit'
         templateUrl: "comments/form.html"
         controller: "CommentController"
+        resolve: requireAuthentication()
       ).when('/users/sign_in',
         templateUrl: "sessions/form.html"
         controller: "UserController"
@@ -34,16 +50,7 @@ blog.config(['$routeProvider', '$httpProvider',
         templateUrl: "registrations/form.html"
         controller: "UserController"
       )
-
-
-    ($httpProvider) ->
-      debugger
-      $httpProvider.interceptors.push ($cookies, $sessionStorage) ->
-        { 'request': (config) ->
-          config.headers['X-USER-EMAIL'] = $sessionStorage.user_email
-          config.headers.Authorization = $sessionStorage.user_token
-          config
-        }
 ])
 
 controllers = angular.module('controllers', [])
+directives = angular.module('directives', [])

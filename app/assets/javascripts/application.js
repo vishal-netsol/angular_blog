@@ -18,4 +18,5 @@
 //= require angular-cookies
 //= require ngStorage
 //= require angular-rails-templates
+//= require angular-bootstrap
 //= require_tree .

@@ -28,7 +28,7 @@ controllers.controller("BlogController", ['$scope', '$routeParams',
       }
     )
 
-    if $routeParams.blogId
+    if $routeParams.blogId and $sessionStorage.user_token
       Comment.query((results) -> $scope.comments = results)
       
       Blog.get({blogId: $routeParams.blogId},

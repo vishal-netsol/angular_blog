@@ -32,12 +32,62 @@ controllers.controller('BlogsController', [ '$scope', '$routeParams', '$location
     $scope.logout = ->
       Session.delete(
         () ->
-          $sessionStorage.user_email = ''
-          $sessionStorage.user_token = ''
-          window.sessionStorage.setItem('ngStorage-user_token', null)
-          window.sessionStorage.setItem('ngStorage-user_email', null)
+          window.sessionStorage.clear()
           $scope.blogs = {}
       )
+
+    $scope.Vishal = {}
+    $scope.Vishal.name = "Vishal"
+    $scope.Vishal.rollno = "26"
+
+    $scope.tree = [
+      {
+        name: 'States'
+        link: '#'
+        subtree: [
+          {
+            name: 'state 1'
+            link: 'state1'
+            subtree: [ {
+              name: 'state 1'
+              link: 'state1'
+              subtree: [ {
+                name: 'vishal'
+                link: 'vishal'
+              } ]
+            } ]
+          }
+          {
+            name: 'state 2'
+            link: 'state2'
+          }
+        ]
+      }
+      {
+        name: 'No states'
+        link: '#'
+        subtree: [ {
+          name: 'no state connected'
+          link: '#'
+        } ]
+      }
+      {
+        name: 'divider'
+        link: '#'
+      }
+      {
+        name: 'State has not been set up'
+        link: '#'
+      }
+      {
+        name: 'divider'
+        link: '#'
+      }
+      {
+        name: 'Here again no state set up'
+        link: '#'
+      }
+    ]
       
 
 ])
