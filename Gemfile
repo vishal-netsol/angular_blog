@@ -27,7 +27,7 @@ gem 'bower-rails'
 
 gem 'angular-rails-templates'
 
-gem 'sprockets', '2.12.3'
+gem 'sprockets', '2.8'
 
 gem 'omniauth'
 
