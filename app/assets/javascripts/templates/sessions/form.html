@@ -15,6 +15,13 @@
       </div>
     </div>
 
+    <div class="form-group" ng-class="{'has_warning has_feedback':errors.name}">
+      <label for="title" class="col-md-2 control-label col-md-offset-2"> Remember Me</label>
+      <div class="col-md-5">
+        <input type="checkbox" ng-model="rememberMe"/>
+      </div>
+    </div>
+
     <div class="form-group pull-right">
       <div class="col-md-4 text-right">
         <button class="btn btn-primary" ng-click="login()"> Login </button>

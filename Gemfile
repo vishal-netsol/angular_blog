@@ -35,6 +35,14 @@ gem 'devise'
 
 gem 'tiddle'
 
+# integrate bundler with capistrano
+gem 'capistrano-bundler'
+
+# if you are using rvm
+gem 'capistrano-rvm'
+
+gem 'capistrano3-unicorn'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

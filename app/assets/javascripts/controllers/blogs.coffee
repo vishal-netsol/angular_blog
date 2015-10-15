@@ -1,12 +1,15 @@
 controllers = angular.module('controllers')
 
-controllers.controller('BlogsController', [ '$scope', '$routeParams', '$location', '$resource', '$http', '$sessionStorage'
+controllers.controller('BlogsController', [ '$scope', '$routeParams', '$location', '$resource', '$http', '$sessionStorage', '$localStorage',
 
-  ($scope, $routeParams, $location, $resource, $http, $sessionStorage)->
+  ($scope, $routeParams, $location, $resource, $http, $sessionStorage, $localStorage)->
 
-    $http.defaults.headers.common['Authorization'] = 'Token token='+$sessionStorage.user_token
+    token = if $sessionStorage.user_token then $sessionStorage.user_token else $localStorage.user_token
+    email = if $sessionStorage.user_email then $sessionStorage.user_email else $localStorage.user_email
 
-    $http.defaults.headers.common['user_email'] = $sessionStorage.user_email
+    $http.defaults.headers.common['Authorization'] = 'Token token='+token
+
+    $http.defaults.headers.common['user_email'] = email
 
     Session = $resource("/users/sign_out", {format: 'json'}, 
       {
@@ -16,7 +19,7 @@ controllers.controller('BlogsController', [ '$scope', '$routeParams', '$location
 
     Blog = $resource('blogs/:blogId', {blogId: "@id", format: 'json'})
 
-    if $sessionStorage.user_token
+    if token
       Blog.query((results) -> $scope.blogs = results)
 
     $scope.newBlog = -> $location.path("blogs/new")
@@ -33,6 +36,7 @@ controllers.controller('BlogsController', [ '$scope', '$routeParams', '$location
       Session.delete(
         () ->
           window.sessionStorage.clear()
+          window.localStorage.clear()
           $scope.blogs = {}
       )
 

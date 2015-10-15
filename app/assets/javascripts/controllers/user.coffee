@@ -1,7 +1,7 @@
 controllers = angular.module('controllers')
-controllers.controller('UserController', ['$scope', '$routeParams', '$resource', '$location', '$sessionStorage', '$http',
+controllers.controller('UserController', ['$scope', '$routeParams', '$resource', '$location', '$sessionStorage', '$http', '$localStorage', '$cookies'
 
-  ($scope, $routeParams, $resource, $location, $sessionStorage, $http)->
+  ($scope, $routeParams, $resource, $location, $sessionStorage, $http, $localStorage, $cookies)->
 
     $http.defaults.headers.common['Authorization'] = 'Token token='+null
 
@@ -20,8 +20,12 @@ controllers.controller('UserController', ['$scope', '$routeParams', '$resource',
     $scope.login = ->
       Session.create({'user': $scope.user},
         ((user) ->
-          $sessionStorage.user_email = user.email
-          $sessionStorage.user_token = user.authentication_token
+          if $scope.rememberMe
+            $localStorage.user_token = user.authentication_token
+            $localStorage.user_email = user.email
+          else
+            $sessionStorage.user_email = user.email
+            $sessionStorage.user_token = user.authentication_token
           $location.path('/'))
       )
 

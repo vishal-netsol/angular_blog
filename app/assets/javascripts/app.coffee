@@ -15,7 +15,7 @@ blog.config(['$routeProvider', '$httpProvider',
 
     requireAuthentication = ->
       { load: ($q, $location) ->
-        if(window.sessionStorage.key('ngStorage-user_token'))
+        if(window.sessionStorage.key('ngStorage-user_token') or window.localStorage.key('ngStorage-user_token'))
           true
         else
           alert("Please login before continuing!!")
