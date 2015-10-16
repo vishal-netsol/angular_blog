@@ -85,6 +85,6 @@ test:
 #
 production:
   <<: *default
-  database: angular_blog_production
-  username: angular_blog
-  password: <%= ENV['ANGULAR_BLOG_DATABASE_PASSWORD'] %>
+  database: angular_blog_staging
+  #username: angular_blog
+  #password: <%= ENV['ANGULAR_BLOG_DATABASE_PASSWORD'] %>
