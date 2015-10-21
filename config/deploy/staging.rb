@@ -5,7 +5,7 @@
 # unless any hosts have the primary property set.
 # Don't declare `role :all`, it's a meta role
 current_branch = `git branch`.match(/\* (\S+)\s/m)[1]
-set :branch, ENV['branch'] || current_branch || 'master'
+set :branch, ENV['branch'] || 'master'
 role :app, %w(roruser@192.168.0.202)
 role :web, %w(roruser@192.168.0.202)
 role :db,  %w(roruser@192.168.0.202)
